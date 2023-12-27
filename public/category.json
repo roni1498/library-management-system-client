@@ -1,0 +1,18 @@
+[
+    {
+      "categoryName": "Travel",
+      "img": "https://example.com/fiction.jpg"
+    },
+    {
+      "categoryName": "Computers & Tech",
+      "img": "https://example.com/mystery.jpg"
+    },
+    {
+      "categoryName": "Science Fiction",
+      "img": "https://example.com/science-fiction.jpg"
+    },
+    {
+      "categoryName": "History",
+      "img": "https://example.com/history.jpg"
+    }
+  ]
