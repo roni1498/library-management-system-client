@@ -1,7 +1,9 @@
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
 
 const BookCard = ({ book }) => {
   const {
+    _id,
     bookName,
     authorName,
     rating,
@@ -53,6 +55,7 @@ const handleRatingChange = (value) => {
             />
           ))}
         </div> <br />
+          <Link to={`/bookDetail/${_id}`}>
           <button className="inline font-bold text-blue-500">
             Read more
             <svg
@@ -71,6 +74,7 @@ const handleRatingChange = (value) => {
               />
             </svg>
           </button>
+          </Link>
           </div>
         </div>
       </div>

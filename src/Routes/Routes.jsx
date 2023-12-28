@@ -5,6 +5,7 @@ import Home from "../Pages/Home";
 import AddBook from "../Pages/AddBook";
 import AllBooks from "../Pages/AllBooks";
 import BookByCategory from "../Pages/BookByCategory";
+import BookDetails from "../Pages/BookDetails";
 
 const router = createBrowserRouter([
     {
@@ -29,6 +30,11 @@ const router = createBrowserRouter([
                 path: "bookByCategory/:category",
                 element: <BookByCategory></BookByCategory>,
                 loader: ({params}) => fetch(`http://localhost:5000/book/${params.category}`)
+            },
+            {
+                path: "bookDetail/:id",
+                element: <BookDetails></BookDetails>,
+                loader: ({params}) => fetch(`http://localhost:5000/single-book/${params.id}`)
             }
         ]
     }
