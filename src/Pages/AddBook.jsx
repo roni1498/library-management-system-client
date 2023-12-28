@@ -1,7 +1,36 @@
+import axios from "axios";
 import Navbar from "../Components/Navbar";
+import Swal from "sweetalert2";
 
 
 const AddBook = () => {
+
+    const handleAddBook = e =>{
+        e.preventDefault();
+
+        const form = e.target;
+        const bookName = form.bookName.value;
+        const quantity = form.quantity.value;
+        const authorName = form.authorName.value;
+        const category = form.category.value;
+        const description = form.description.value;
+        const rating = form.rating.value;
+        const image = form.image.value;
+        const newBook = { bookName, quantity, authorName, category, description, rating, image };
+        console.log(newBook)
+
+        // // data send to the server
+            axios.post('http://localhost:5000/book', newBook)
+            .then(res => {
+                console.log(res.data)
+                if(res.data.insertedId){
+                        Swal.fire({
+                            icon: "success",
+                            title: "New Book",
+                            text: "added successfully"
+                          });
+            }})
+    }
     return (
         <div>
       <div className="text-blue-500">
@@ -9,7 +38,7 @@ const AddBook = () => {
       </div>
     <div className="bg-[#F4F3F0] p-12 max-w-7xl mx-auto mt-12">
         <h1 className="text-4xl font-semibold text-center mb-12">Add <span className="text-blue-500">Book</span></h1>
-       <form>
+       <form onSubmit={handleAddBook}>
          {/* product and quantity */}
          <div className="md:flex gap-2 mb-4">
        <div className="form-control md:w-1/2">
@@ -56,10 +85,10 @@ const AddBook = () => {
       <div className="md:flex gap-2 mb-4">
        <div className="form-control w-1/2">
         <label className="label">
-            <span className="label-text">Short Description</span>
+            <span className="label-text">Description</span>
         </label>
        <label >
-       <input className="input input-bordered w-full" type="text" name="shortDescription" placeholder="Short Description" />
+       <input className="input input-bordered w-full" type="text" name="description" placeholder="Description" />
        </label>
        </div>
 

@@ -2,7 +2,6 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import CategoryCard from "./CategoryCard";
 
-
 const BookCategory = () => {
     const [categories, setCategories] = useState([])
 

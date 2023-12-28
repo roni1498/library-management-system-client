@@ -7,7 +7,7 @@ const Navbar = () => {
     const links = <>
      <li className="hover:text-blue-600 hover:font-bold font-semibold"><NavLink to={'/'}>Home</NavLink></li>
      <li className="hover:text-blue-600 hover:font-bold font-semibold"><NavLink to={'/addBook'}>Add Book</NavLink></li>
-     <li className="hover:text-blue-600 hover:font-bold font-semibold"><NavLink >All Books</NavLink></li>
+     <li className="hover:text-blue-600 hover:font-bold font-semibold"><NavLink to={'/allBooks'}>All Books</NavLink></li>
      <li className="hover:text-blue-600 hover:font-bold font-semibold"><NavLink >Borrowed Books</NavLink></li>
     </>
     return (
@@ -21,10 +21,12 @@ const Navbar = () => {
         {links}
       </ul>
     </div>
+    <Link to={'/'}>
     <div className="flex md:flex-col items-center gap-1">
     <img className="md:h-11 md:w-11 h-8 w-8" src={logo} alt="" />
     <h1 className="md:text-2xl text-xl font-bold text-blue-500 flex flex-col md:flex-row md:gap-2 text-center">BookHive <span className="text-blue-800 -mt-3 md:mt-0">Hub</span></h1>
     </div>
+    </Link>
   </div>
   <div className=" hidden lg:flex navbar-center">
     <ul className=  "flex flex-row px-1 space-x-3">
