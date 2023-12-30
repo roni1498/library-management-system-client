@@ -1,6 +1,6 @@
 import { useLoaderData } from "react-router-dom";
-import BookCard from "../Components/BookCard";
 import Navbar from "../Components/Navbar";
+import AllBookCard from "../Components/AllBookCard";
 
 
 const AllBooks = () => {
@@ -12,7 +12,7 @@ const AllBooks = () => {
             </div>
             <div className="grid lg:grid-cols-4 md:grid-cols-3 max-w-7xl mx-auto gap-6 mt-14">
             {
-                loadedBooks?.map(book => <BookCard key={book._id} book={book}></BookCard>)
+                loadedBooks?.map(book => <AllBookCard key={book._id} book={book}></AllBookCard>)
             }
             </div>
         </div>

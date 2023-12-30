@@ -1,14 +1,58 @@
 import Navbar from "../Components/Navbar";
 import { useLoaderData, useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { FaBookReader, FaArrowLeft } from "react-icons/fa";
+import Swal from "sweetalert2";
+import BorrowModal from "./../Components/BorrowModal";
+import axios from "axios";
 
 const BookDetails = () => {
   const book = useLoaderData();
-  const { bookName, authorName, category, description, rating, image } = book;
+  const { _id, bookName, authorName, category, description, rating, image, quantity } = book;
   const numberRating = parseFloat(rating);
   const [selectedRating, setSelectedRating] = useState(numberRating);
   const navigate = useNavigate();
+  const [showBorrowModal, setShowBorrowModal] = useState(false);
+  const [bookQuantity, setBookQuantity] = useState(parseInt(quantity));
+
+  useEffect(() => {
+    setBookQuantity(parseInt(quantity));
+  }, [quantity]);
+
+  const handleOnClose = () => setShowBorrowModal(false);
+
+  const handleBorrowBook = () => {
+    const borrowBook = {
+      bookName,
+      category,
+      image,
+    };
+
+    if(bookQuantity > 0) {
+      axios
+        .post("http://localhost:5000/borrowBook", borrowBook)
+        .then((res) => {
+          console.log(res.data);
+          if (res.data.insertedId) {
+            Swal.fire({
+              icon: "success",
+              title: "Success",
+              text: "Product added to Cart",
+            });
+          }
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    } else {
+      // Optionally, show a message or toast indicating that the book is out of stock
+      Swal.fire({
+        icon: "warning",
+        title: "Out of Stock",
+        text: "This book is currently out of stock.",
+      });
+    }
+  };
 
   const handleGoBack = () => {
     navigate(-1);
@@ -64,33 +108,25 @@ const BookDetails = () => {
               />
             ))}
           </div>
-          <div className="flex gap-2">
-            <button onClick={() => document.getElementById("my_modal_5").showModal()} className="btn bg-slate-900 text-white font-semibold rounded-sm">
+          <div className="mt-20 space-x-4">
+            <button
+              onClick={() => setShowBorrowModal(true)}
+              disabled={bookQuantity === 0}
+              className={`px-3 py-2 rounded hover:scale-95 transition text-xl ${
+                bookQuantity > 0 ? 'bg-gray-700 text-white hover:bg-gray-500' : 'bg-gray-400 text-white cursor-not-allowed'
+              }`}
+            >
               Borrow
             </button>
-            {/* Open the modal using document.getElementById('ID').showModal() method */}
-            <dialog
-              id="my_modal_5"
-              className="modal modal-bottom sm:modal-middle"
+            <BorrowModal
+              onClose={handleOnClose}
+              visible={showBorrowModal}
+              book={book}
+            ></BorrowModal>
+            <button
+              onClick={() => handleBorrowBook(_id)}
+              className="btn text-lg rounded-sm hover:scale-95"
             >
-              <div className="modal-box">
-                <h3 className="font-bold text-lg text-blue-500">Please provide the return date..</h3>
-               <form>
-               <div className="space-y-4">
-               <input className="input input-bordered w-full rounded-lg" type="date" name="date" id="" />
-                <br />
-                <input className="btn hover:bg-blue-500 hover:text-white w-full rounded-lg" type="submit" value="Submit" />
-               </div>
-               </form>
-                <div className="modal-action">
-                  <form method="dialog">
-                    {/* if there is a button in form, it will close the modal */}
-                    <button className="btn">Close</button>
-                  </form>
-                </div>
-              </div>
-            </dialog>
-            <button className="btn text-lg rounded-sm">
               <FaBookReader />
               Read
             </button>

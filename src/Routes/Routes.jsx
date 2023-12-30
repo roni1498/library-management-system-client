@@ -6,6 +6,12 @@ import AddBook from "../Pages/AddBook";
 import AllBooks from "../Pages/AllBooks";
 import BookByCategory from "../Pages/BookByCategory";
 import BookDetails from "../Pages/BookDetails";
+import Login from "../Pages/Login";
+import SignUp from "../Pages/SignUp";
+import BorrowBooks from "../Pages/BorrowBooks";
+import UpdateBook from "../Pages/UpdateBook";
+import Banner from "../Components/Banner";
+import PrivateRoutes from "./PrivateRoutes";
 
 const router = createBrowserRouter([
     {
@@ -33,9 +39,27 @@ const router = createBrowserRouter([
             },
             {
                 path: "bookDetail/:id",
-                element: <BookDetails></BookDetails>,
+                element: <PrivateRoutes><BookDetails></BookDetails></PrivateRoutes>,
                 loader: ({params}) => fetch(`http://localhost:5000/single-book/${params.id}`)
-            }
+            },
+            {
+                path: "/login",
+                element: <Login></Login>
+            },
+            {
+                path: "/signUp",
+                element: <SignUp></SignUp>
+            },
+            {
+                path: "/borrowedBooks",
+                element: <BorrowBooks></BorrowBooks>,
+                loader: () => fetch('http://localhost:5000/borrowBook')
+            },
+            {
+                path: "/updateBook/:id",
+                element: <UpdateBook></UpdateBook>,
+                loader: ({params}) => fetch(`http://localhost:5000/single-book/${params.id}`)
+            },
         ]
     }
 ])

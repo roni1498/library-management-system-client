@@ -20,6 +20,7 @@ const handleRatingChange = (value) => {
     setSelectedRating(value);
   };
 
+
   return (
     <section className="mx-auto">
       <div className="w-[300px] h-[460px] bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">

@@ -1,3 +1,4 @@
+
 import AboutUs from "../Components/AboutUs";
 import Banner from "../Components/Banner";
 import BookCategory from "../Components/BookCategory";
@@ -5,6 +6,7 @@ import Footer from "../Components/Footer";
 import Navbar from "../Components/Navbar";
 
 const Home = () => {
+  
   return (
     <div>
       <div className="relative text-white">
