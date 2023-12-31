@@ -4,10 +4,26 @@ import { FiLogIn } from "react-icons/fi";
 import Swal from "sweetalert2";
 import { CgLogOut } from "react-icons/cg";
 import useAuth from "../Hooks/useAuth";
+import { IoSunny, IoMoonSharp } from "react-icons/io5";
+import { useEffect, useState } from "react";
+import avatar from '../assets/avator.jpg'
 
 const Navbar = () => {
   const { user, logOut } = useAuth();
+ const [theme, setTheme] = useState('light')
 
+ useEffect(()=>{
+if(theme === 'dark'){
+  document.documentElement.classList.add('dark')
+}
+else{
+  document.documentElement.classList.remove('dark')
+}
+ },[theme])
+
+ const handleThemeSwitch = () =>{
+  setTheme(theme === 'dark' ? 'light' : 'dark')
+ }
   // handle logOut
   const handleLogOut = () => {
     logOut()
@@ -81,13 +97,18 @@ const Navbar = () => {
         </ul>
       </div>
       <div className="navbar-end">
+        <div className="flex gap-2 dark:bg-slate-900 bg-gray-100 bg-opacity-50 rounded dark:bg-opacity-50 p-2 mr-2">
+         <button onClick={handleThemeSwitch} className="leading-9 rounded-full text-sky-300">
+            {theme === 'dark' ? <IoSunny className="text-xl" /> : <IoMoonSharp className="text-xl text-sky-800" />}
+          </button>
+        </div>
         {/* user photo and name / login and logout button toggle */}
         {user ? (
           <>
-            <p className="">{user.displayName}</p>
+            <p className="w-[150px]">{user.displayName}</p>
             <label tabIndex={0} className="btn btn-ghost btn-circle avatar">
               <div className="w-10 rounded-full">
-                <img src={user.photoURL} />
+                {user.photoURL ? <img src={user.photoURL} /> : <img src={avatar} />}
               </div>
             </label>
             <button

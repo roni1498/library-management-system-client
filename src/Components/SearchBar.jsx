@@ -4,14 +4,16 @@ import { FaSearch } from 'react-icons/fa';
 
 const SearchBar = ({setResults}) => {
     const [input, setInput] = useState("")
+
     const fetchData = (value) =>{
-        axios.get('http://localhost:5000/book')
+        axios.get('https://library-management-system-server-mu.vercel.app/book')
         .then(Response => {
             const books = Response.data;
-            const results = books.filter((book) => {
-                return value && book && book.bookName.toLowerCase().includes(value)
+            const results = books.filter((book) => { 
+                return value && book && book?.bookName?.toLowerCase().includes(value)
             })
             setResults(results)
+            // console.log(results)
         })
     }
 
@@ -36,3 +38,6 @@ const SearchBar = ({setResults}) => {
 };
 
 export default SearchBar;
+
+
+

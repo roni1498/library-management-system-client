@@ -5,7 +5,7 @@ import Navbar from "../Components/Navbar";
 
 const BookByCategory = () => {
     const bookByCategory = useLoaderData() 
-    console.log(bookByCategory)
+    // console.log(bookByCategory)
     return (
         <div>
             <div className="text-blue-600">

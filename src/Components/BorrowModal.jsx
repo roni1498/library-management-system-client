@@ -4,9 +4,10 @@ import Swal from "sweetalert2";
 import { AuthContext } from "../provider/AuthProvider";
 
 const BorrowModal = ({ visible, onClose, book }) => {
-  const { _id, bookName, category, image, } = book;
+  const { _id, bookName, category, image, quantity} = book;
   const [returnDate, setReturnDate] = useState("");
   const [borrowDate, setBorrowDate] = useState(getDate())
+  const [updateQuantity, setUpdateQuantity] = useState(parseInt(quantity));
   const { user } = useContext(AuthContext);
   const email = user?.email;
   const userName = user?.displayName;
@@ -19,6 +20,8 @@ const BorrowModal = ({ visible, onClose, book }) => {
     return `${month}/${date}/${year}`;
   }
 
+  //updated quantity when borrow book 
+  const updatedQuantity = updateQuantity - 1;
 
   const handleBorrowBook = () => {
     const borrowBook = {
@@ -28,10 +31,11 @@ const BorrowModal = ({ visible, onClose, book }) => {
       category,
       image,
       returnDate,
-      borrowDate
+      borrowDate,
+      quantity
     };
 
-    console.log(borrowBook);
+    // console.log(borrowBook);
 
     // Check if returnDate is not provided
     if (!returnDate) {
@@ -42,10 +46,10 @@ const BorrowModal = ({ visible, onClose, book }) => {
       });
       return;
     }
-    console.log(borrowBook);
+    // console.log(borrowBook);
 
     axios
-      .post("http://localhost:5000/borrowBook", borrowBook)
+      .post("https://library-management-system-server-mu.vercel.app/borrowBook", borrowBook)
       .then((res) => {
         console.log(res.data);
         if (res.data.insertedId) {
@@ -68,6 +72,15 @@ const BorrowModal = ({ visible, onClose, book }) => {
           icon: "error",
         });
       });
+      axios.patch(`https://library-management-system-server-mu.vercel.app/single-book/${_id}`,  {
+        quantity: updatedQuantity,
+      })
+      .then(res => {
+          console.log(res.data)
+        })
+        .catch((error) => {
+          console.log(error);
+        })
   };
 
   const handleClose = () => {

@@ -1,6 +1,6 @@
 import Navbar from "../Components/Navbar";
 import { useLoaderData, useNavigate } from "react-router-dom";
-import { useEffect, useState } from "react";
+import {  useState } from "react";
 import { FaBookReader, FaArrowLeft } from "react-icons/fa";
 import Swal from "sweetalert2";
 import BorrowModal from "./../Components/BorrowModal";
@@ -15,10 +15,6 @@ const BookDetails = () => {
   const [showBorrowModal, setShowBorrowModal] = useState(false);
   const [bookQuantity, setBookQuantity] = useState(parseInt(quantity));
 
-  useEffect(() => {
-    setBookQuantity(parseInt(quantity));
-  }, [quantity]);
-
   const handleOnClose = () => setShowBorrowModal(false);
 
   const handleBorrowBook = () => {
@@ -30,7 +26,7 @@ const BookDetails = () => {
 
     if(bookQuantity > 0) {
       axios
-        .post("http://localhost:5000/borrowBook", borrowBook)
+        .post("https://library-management-system-server-mu.vercel.app/borrowBook", borrowBook)
         .then((res) => {
           console.log(res.data);
           if (res.data.insertedId) {

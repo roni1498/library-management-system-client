@@ -24,22 +24,22 @@ const router = createBrowserRouter([
             },
             {
                 path: "/addBook",
-                element: <AddBook></AddBook>
+                element: <PrivateRoutes><AddBook></AddBook></PrivateRoutes>
             },
             {
                 path: "/allBooks",
-                element: <AllBooks></AllBooks>,
-                loader: () => fetch('http://localhost:5000/book')
+                element: <PrivateRoutes><AllBooks></AllBooks></PrivateRoutes>,
+                loader: () => fetch('https://library-management-system-server-mu.vercel.app/book')
             },
             {
                 path: "bookByCategory/:category",
                 element: <BookByCategory></BookByCategory>,
-                loader: ({params}) => fetch(`http://localhost:5000/book/${params.category}`)
+                loader: ({params}) => fetch(`https://library-management-system-server-mu.vercel.app/book/${params.category}`)
             },
             {
                 path: "bookDetail/:id",
                 element: <PrivateRoutes><BookDetails></BookDetails></PrivateRoutes>,
-                loader: ({params}) => fetch(`http://localhost:5000/single-book/${params.id}`)
+                loader: ({params}) => fetch(`https://library-management-system-server-mu.vercel.app/single-book/${params.id}`)
             },
             {
                 path: "/login",
@@ -52,12 +52,12 @@ const router = createBrowserRouter([
             {
                 path: "/borrowedBooks",
                 element: <PrivateRoutes><BorrowBooks></BorrowBooks></PrivateRoutes>,
-                // loader: () => fetch('http://localhost:5000/borrowBook')
+                // loader: () => fetch('https://library-management-system-server-mu.vercel.app/borrowBook')
             },
             {
                 path: "/updateBook/:id",
-                element: <UpdateBook></UpdateBook>,
-                loader: ({params}) => fetch(`http://localhost:5000/single-book/${params.id}`)
+                element: <PrivateRoutes><UpdateBook></UpdateBook></PrivateRoutes>,
+                loader: ({params}) => fetch(`https://library-management-system-server-mu.vercel.app/single-book/${params.id}`)
             },
         ]
     }

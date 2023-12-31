@@ -18,7 +18,7 @@ const SignUp = () => {
         const email = form.email.value;
         const password = form.password.value;
         const user = {email, password}
-        console.log(user)
+        // console.log(user)
 
         setRegisterError('')
         setSuccess('')
@@ -45,6 +45,9 @@ const SignUp = () => {
             text: "You Successfully Sign Up!",
             icon: "success"
           });
+       setTimeout(() => {
+        navigate("/login")
+       }, 5000);
         })
         .catch(error => {
           console.log(error);

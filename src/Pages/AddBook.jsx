@@ -1,9 +1,16 @@
 import axios from "axios";
 import Navbar from "../Components/Navbar";
 import Swal from "sweetalert2";
+import { useState } from "react";
 
 
 const AddBook = () => {
+
+    const [selectedCategory, setSelectedCategory] = useState('');
+
+    const handleCategoryChange = (e) => {
+      setSelectedCategory(e.target.value);
+    };
 
     const handleAddBook = e =>{
         e.preventDefault();
@@ -12,15 +19,15 @@ const AddBook = () => {
         const bookName = form.bookName.value;
         const quantity = form.quantity.value;
         const authorName = form.authorName.value;
-        const category = form.category.value;
+        const category = selectedCategory;
         const description = form.description.value;
         const rating = form.rating.value;
         const image = form.image.value;
         const newBook = { bookName, quantity, authorName, category, description, rating, image };
-        console.log(newBook)
+        // console.log(newBook)
 
         // // data send to the server
-            axios.post('http://localhost:5000/book', newBook)
+            axios.post('https://library-management-system-server-mu.vercel.app/book', newBook)
             .then(res => {
                 console.log(res.data)
                 if(res.data.insertedId){
@@ -32,11 +39,11 @@ const AddBook = () => {
             }})
     }
     return (
-        <div>
-      <div className="text-blue-500">
+        <div className="">
+      <div className="text-blue-500 dark:text-gray-100 dark:bg-slate-900">
       <Navbar></Navbar>
       </div>
-    <div className="bg-[#F4F3F0] p-12 max-w-7xl mx-auto mt-12">
+    <div className="bg-[#F4F3F0] p-12 max-w-7xl mx-auto mt-12 dark:text-gray-100 dark:bg-slate-900">
         <h1 className="text-4xl font-semibold text-center mb-12">Add <span className="text-blue-500">Book</span></h1>
        <form onSubmit={handleAddBook}>
          {/* product and quantity */}
@@ -72,12 +79,22 @@ const AddBook = () => {
        </div>
 
        <div className="form-control md:w-1/2">
-        <label className="label">
+
+<label htmlFor="category" className="label">
             <span className="label-text">Category</span>
-        </label>
-       <label >
-       <input className="input input-bordered w-full" type="text" name="category" placeholder="Category" />
-       </label>
+          </label>
+          <select
+            id="category"
+            value={selectedCategory}
+            onChange={handleCategoryChange}
+            className="input input-bordered w-full required"
+          >
+            <option value="">-- Choose a category --</option>
+            <option value="History">History</option>
+            <option value="Travel">Travel</option>
+            <option value="Tech">Tech</option>
+            <option value="sci-fi">sci-fi</option>
+          </select>
        </div>
         </div>
 

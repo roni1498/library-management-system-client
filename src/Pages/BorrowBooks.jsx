@@ -12,15 +12,68 @@ const BorrowBooks = () => {
    const { user } = useContext(AuthContext);
    const [books, setBooks] = useState([])
    const axiosSecure = useAxiosSecure()
-//    const url = `http://localhost:5000/borrowBook?email=${user.email}`
+//    const url = `https://library-management-system-server-mu.vercel.app/borrowBook?email=${user.email}`
    const url = `/borrowBook?email=${user.email}`
    useEffect(()=>{
     axiosSecure.get(url)
     .then(res => {
-        console.log(res.data)
         setBooks(res.data)
     })
    },[url, axiosSecure])
+
+
+  //  handle return book
+
+  // update quantity
+  let updateQuantity = 1;
+  for (const book of books) {
+    const quantity = Number(book?.quantity)
+    updateQuantity = updateQuantity + quantity;
+    console.log(updateQuantity);
+  }
+
+   const handleReturn = _id =>{
+
+   
+
+      // remove from borrow book after click on return
+      Swal.fire({
+        title: "Are you sure?",
+        text: "You want to Return the Book!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Yes, Return it!"
+      }).then((result) => {
+   axios.delete(`https://library-management-system-server-mu.vercel.app/borrowBook/${_id}`)
+   .then(response => {
+    console.log(response?.data)
+    if (result.isConfirmed) {
+        Swal.fire({
+          title: "Returned!",
+          text: "Your Book has been Returned.",
+          icon: "success"
+        });
+        if(response?.data?.deletedCount>0){
+              const remaining = books.filter(book => book._id !== _id);
+              setBooks(remaining)
+        }
+      }
+   })
+    })
+
+     // update quantity send to the server
+     axios.patch(`https://library-management-system-server-mu.vercel.app/single-book/${_id}`,  {
+      quantity: updateQuantity,
+    })
+    .then(res => {
+        console.log(res.data)
+      })
+      .catch((error) => {
+        console.log(error);
+      })
+   }
 
 //    remove borrowBook from data base and client side
 const handleDelete = _id =>{
@@ -34,7 +87,7 @@ const handleDelete = _id =>{
         cancelButtonColor: "#d33",
         confirmButtonText: "Yes, Remove it!"
       }).then((result) => {
-   axios.delete(`http://localhost:5000/borrowBook/${_id}`)
+   axios.delete(`https://library-management-system-server-mu.vercel.app/borrowBook/${_id}`)
    .then(response => {
     console.log(response?.data)
     if (result.isConfirmed) {
@@ -102,7 +155,7 @@ const handleDelete = _id =>{
             <p className="">{book.returnDate}</p>
         </td>
         <td>
-            <button className="text-blue-500 hover:text-blue-700 font-semibold hover:font-bold text-lg ">Return</button>
+            <button  onClick={() => handleReturn(book._id)} className="text-blue-500 hover:text-blue-700 font-semibold hover:font-bold text-lg ">Return</button>
         </td>
       </tr>
             ))}

@@ -19,7 +19,7 @@ const Login = () => {
         const email = form.email.value;
         const password = form.password.value;
         const user = { email, password}
-        console.log(user)
+        // console.log(user)
 
         setLoginError('');
 
@@ -62,7 +62,7 @@ const Login = () => {
      }
     return (
         <div>
-            <div>
+            <div className='text-blue-500'>
                 <Navbar></Navbar>
             </div>
             <div className='bg-gray-50 flex items-center justify-center'>

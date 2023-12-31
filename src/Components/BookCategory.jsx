@@ -6,7 +6,7 @@ const BookCategory = () => {
     const [categories, setCategories] = useState([])
 
     useEffect(()=>{
-        axios.get('http://localhost:5000/category')
+        axios.get('https://library-management-system-server-mu.vercel.app/category')
         .then(res => setCategories(res.data))
     },[])
     return (
