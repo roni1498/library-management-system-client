@@ -1,14 +1,26 @@
 
-import { useLoaderData } from "react-router-dom";
+
 import Navbar from "../Components/Navbar";
 import axios from "axios";
 import Swal from "sweetalert2";
-import { useState } from "react";
+import { useContext, useEffect, useState } from "react";
+import { AuthContext } from "../provider/AuthProvider";
+import useAxiosSecure from "../Hooks/useAxiosSecure";
 
 
 const BorrowBooks = () => {
-   const loadedBooks = useLoaderData()
-   const [books, setBooks] = useState(loadedBooks)
+   const { user } = useContext(AuthContext);
+   const [books, setBooks] = useState([])
+   const axiosSecure = useAxiosSecure()
+//    const url = `http://localhost:5000/borrowBook?email=${user.email}`
+   const url = `/borrowBook?email=${user.email}`
+   useEffect(()=>{
+    axiosSecure.get(url)
+    .then(res => {
+        console.log(res.data)
+        setBooks(res.data)
+    })
+   },[url, axiosSecure])
 
 //    remove borrowBook from data base and client side
 const handleDelete = _id =>{

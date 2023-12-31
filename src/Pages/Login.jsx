@@ -3,12 +3,12 @@ import image from '../assets/login.jpg';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { FcGoogle } from 'react-icons/fc';
 import Navbar from '../Components/Navbar';
-import { useContext, useState } from 'react';
-import { AuthContext } from '../provider/AuthProvider';
 import Swal from 'sweetalert2';
+import useAuth from '../Hooks/useAuth';
+import { useState } from 'react';
 
 const Login = () => {
-    const { login, googleSignIn } = useContext(AuthContext)
+    const { login, googleSignIn } = useAuth();
     const location = useLocation();
     const navigate = useNavigate()
     const [loginError, setLoginError] = useState('');

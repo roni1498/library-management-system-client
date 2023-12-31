@@ -8,7 +8,7 @@ const BorrowModal = ({ visible, onClose, book }) => {
   const [returnDate, setReturnDate] = useState("");
   const [borrowDate, setBorrowDate] = useState(getDate())
   const { user } = useContext(AuthContext);
-  const userEmail = user?.email;
+  const email = user?.email;
   const userName = user?.displayName;
   
   function getDate() {
@@ -23,7 +23,7 @@ const BorrowModal = ({ visible, onClose, book }) => {
   const handleBorrowBook = () => {
     const borrowBook = {
       userName,
-      userEmail,
+      email,
       bookName,
       category,
       image,

@@ -10,7 +10,6 @@ import Login from "../Pages/Login";
 import SignUp from "../Pages/SignUp";
 import BorrowBooks from "../Pages/BorrowBooks";
 import UpdateBook from "../Pages/UpdateBook";
-import Banner from "../Components/Banner";
 import PrivateRoutes from "./PrivateRoutes";
 
 const router = createBrowserRouter([
@@ -52,8 +51,8 @@ const router = createBrowserRouter([
             },
             {
                 path: "/borrowedBooks",
-                element: <BorrowBooks></BorrowBooks>,
-                loader: () => fetch('http://localhost:5000/borrowBook')
+                element: <PrivateRoutes><BorrowBooks></BorrowBooks></PrivateRoutes>,
+                // loader: () => fetch('http://localhost:5000/borrowBook')
             },
             {
                 path: "/updateBook/:id",

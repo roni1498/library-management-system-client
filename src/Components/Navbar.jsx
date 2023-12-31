@@ -1,13 +1,12 @@
 import { Link, NavLink } from "react-router-dom";
 import logo from "../assets/logo.png";
 import { FiLogIn } from "react-icons/fi";
-import { useContext } from "react";
-import { AuthContext } from "../provider/AuthProvider";
 import Swal from "sweetalert2";
 import { CgLogOut } from "react-icons/cg";
+import useAuth from "../Hooks/useAuth";
 
 const Navbar = () => {
-  const { user, logOut } = useContext(AuthContext);
+  const { user, logOut } = useAuth();
 
   // handle logOut
   const handleLogOut = () => {
@@ -33,9 +32,11 @@ const Navbar = () => {
       <li className="hover:text-blue-600 hover:font-bold font-semibold">
         <NavLink to={"/allBooks"}>All Books</NavLink>
       </li>
-      <li className="hover:text-blue-600 hover:font-bold font-semibold">
-        <NavLink to={"/borrowedBooks"}>Borrowed Books</NavLink>
-      </li>
+      {
+              user?.email && <li className="hover:text-blue-600 hover:font-bold font-semibold">
+              <NavLink to={"/borrowedBooks"}>Borrowed Books</NavLink>
+            </li>
+            }
     </>
   );
   return (
@@ -63,6 +64,7 @@ const Navbar = () => {
             className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52"
           >
             {links}
+            
           </ul>
         </div>
         <Link to={"/"}>
@@ -75,7 +77,8 @@ const Navbar = () => {
         </Link>
       </div>
       <div className=" hidden lg:flex navbar-center">
-        <ul className="flex flex-row px-1 space-x-3">{links}</ul>
+        <ul className="flex flex-row px-1 space-x-3">{links}
+        </ul>
       </div>
       <div className="navbar-end">
         {/* user photo and name / login and logout button toggle */}
