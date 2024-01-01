@@ -17,39 +17,6 @@ const BookDetails = () => {
 
   const handleOnClose = () => setShowBorrowModal(false);
 
-  const handleBorrowBook = () => {
-    const borrowBook = {
-      bookName,
-      category,
-      image,
-    };
-
-    if(bookQuantity > 0) {
-      axios
-        .post("https://library-management-system-server-mu.vercel.app/borrowBook", borrowBook)
-        .then((res) => {
-          console.log(res.data);
-          if (res.data.insertedId) {
-            Swal.fire({
-              icon: "success",
-              title: "Success",
-              text: "Product added to Cart",
-            });
-          }
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-    } else {
-      // Optionally, show a message or toast indicating that the book is out of stock
-      Swal.fire({
-        icon: "warning",
-        title: "Out of Stock",
-        text: "This book is currently out of stock.",
-      });
-    }
-  };
-
   const handleGoBack = () => {
     navigate(-1);
   };
