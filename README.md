@@ -4,7 +4,7 @@ BookHiv Hub is a web application designed to streamline the management of a libr
 
 ## Website URL
 
-You can access the live website at [https://library-management-9dba1.web.app/](https://library-management-system-client.vercel.app/)
+You can access the live website at [https://library-management-system-client.vercel.app/](https://library-management-system-client.vercel.app/)
 
 ## Key Features
 
